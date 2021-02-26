@@ -77,9 +77,13 @@ if (jIOrgid=="LBNL" and jISiteid=="FAC" and  ondelete == False):
             setError("lbl_wkthruopsdescnotnull","lbl_wkthruops","")
             boolError=True
     
-        if (mbo.getFloat("opduration") <= 0) :
-            setError("lbl_wkthruopduration>0","lbl_wkthruops","")
-            boolError=True
+        #if (mbo.getFloat("quantity") <= 0) :
+        #  setError("lbl_wkthruopqty>0","lbl_wkthruops","")
+        #  boolError=True
+           
+        #if (mbo.getFloat("opduration") <= 0) :
+        #   setError("lbl_wkthruopduration>0","lbl_wkthruops","")
+        #   boolError=True
     ########################   
          
     if (mbo.getName()== "LBL_WKTHRU" or mbo.getName()== "LBL_WOWKTHRU"):

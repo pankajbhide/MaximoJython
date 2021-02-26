@@ -44,7 +44,6 @@ for i in range(len(reqData)):
 ################################################################
 
 mxServer = MXServer.getMXServer()
-runAsUserInfo1 = mxServer.getUserInfo("IT-BS-MXINTADM")
 conKey = mxServer.getSystemUserInfo().getConnectionKey()
 
 ################################################################################
@@ -53,14 +52,9 @@ conKey = mxServer.getSystemUserInfo().getConnectionKey()
 
 con = mxServer.getDBManager().getConnection(conKey)
 
-strUpdate  ="update maximo.chartofaccounts a "
-strUpdate +=" set (a.active, a.accountname,a.lbl_project_id,a.lbl_activity_id, "
-strUpdate +=" a.lbl_proj_desc, a.lbl_act_desc,a.lbl_changedate "
-strUpdate +=") ="
-strUpdate +="(select b.active,b.comptext, b.lbl_project_id,b.lbl_activity_id, "
-strUpdate +="b.lbl_proj_desc, b.lbl_act_desc,sysdate "
-strUpdate +="from maximo.glcomponents b "
-strUpdate +="where b.compvalue=a.glaccount ) "
+strUpdate  ="update maximo.workorder  "
+strUpdate +=" set worktype='CM' "
+strUpdate +=" where wonum='ALS-110460'"
 
 
 try:
@@ -79,5 +73,5 @@ finally:
     conn=None
 
 resp = JSONObject()
-resp.put("coa","updated")
+resp.put("alswo","updated")
 responseBody = resp.serialize(True)

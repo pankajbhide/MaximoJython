@@ -107,7 +107,7 @@ if ( jIOrgid == 'LBNL' and jISiteid == 'FAC'):
             maxWorktypeSet=None
             
             #if (mbo.getString("LBL_RELEASE_STATUS") in ('REQUIRED','REQUEST FOR INFORMATION','RELEASED')):
-            if (boolFamReqd == True):
+            if (boolFamReqd == True and mbo.getBoolean("istask")== False):
                 if (mbo.getMboValueData("SCHEDSTART").isNull() == True):
                     setError("lbl_schedstartnull","workorder",mbo.getString("wonum"))
                     boolError=True

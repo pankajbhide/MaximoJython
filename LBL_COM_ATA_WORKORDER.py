@@ -603,6 +603,29 @@ if ( jIOrgid == 'LBNL' and jISiteid == 'FAC'):
 
                         newWpMaterial.setValue("LOCATION","ITEMMASTER" ,MboConstants.NOACCESSCHECK | MboConstants.NOVALIDATION)
                     itemRemote1=None
+                    
+                ############################   
+                # Insert Attached documents
+                ############################
+                newDocLinkSet=mbo.getMboSet("DOCLINKS")
+                mbosetremote1 = MXServer.getMXServer().getMboSet("doclinks", mbo.getUserInfo())
+                mbosetremote1.setUserWhere("ownertable='LBL_WKTHRU' and ownerid=(select lbl_wkthruid from lbl_wkthru where wkthruid='" + mbo.getString("lbl_wkthruid") +"')")
+                if (not mbosetremote1.isEmpty()):
+                    docMbo = mbosetremote1.moveFirst()
+                    # Iterate docklinks
+                    while docMbo:
+                        newDoclink=newDocLinkSet.add()
+                        newDoclink.setValue("doctype",   docMbo.getString("doctype"),  MboConstants.NOACCESSCHECK | MboConstants.NOVALIDATION)
+                        newDoclink.setValue("docinfoid", docMbo.getInt("docinfoid"),  MboConstants.NOACCESSCHECK | MboConstants.NOVALIDATION)
+                        newDoclink.setValue("document", docMbo.getString("document"),  MboConstants.NOACCESSCHECK | MboConstants.NOVALIDATION)
+                        newDoclink.setValue("ownerid", mbo.getInt("workorderid"),  MboConstants.NOACCESSCHECK | MboConstants.NOVALIDATION)
+                        newDoclink.setValue("ownertable", "WORKORDER",  MboConstants.NOACCESSCHECK | MboConstants.NOVALIDATION)
+                        newDoclink.setValue("changedate" ,MXServer.getMXServer().getDate(),MboConstants.NOACCESSCHECK | MboConstants.NOVALIDATION_AND_NOACTION) 
+                        newDoclink.setValue("changeby" ,user, MboConstants.NOACCESSCHECK | MboConstants.NOVALIDATION_AND_NOACTION)
+                        docMbo = mbosetremote1.moveNext()
+                mbosetremote1=None       
+                        
+            
                 #*******************
                 #LBL_WOWKTHRURES
                 #******************
